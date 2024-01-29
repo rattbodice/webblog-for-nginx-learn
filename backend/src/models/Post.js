@@ -1,4 +1,4 @@
-import { sequelize, DataTypes } from "../db.js";
+const {sequelize,DataTypes} = require('../db.js')
 const Post = sequelize.define(
   "posts",
   {
@@ -15,7 +15,10 @@ const Post = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    imageUrl: {
+      type: DataTypes.STRING
+    }
   },
   {}
 );
-export default Post;
+module.exports = Post

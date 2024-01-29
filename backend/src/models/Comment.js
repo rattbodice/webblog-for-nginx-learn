@@ -1,4 +1,4 @@
-import { sequelize, DataTypes } from '../db.js';
+const {sequelize,DataTypes} = require('../db.js')
   const Comment = sequelize.define(
     "comments",
     {
@@ -14,4 +14,4 @@ import { sequelize, DataTypes } from '../db.js';
     },
     {}
   );
- export default Comment
+module.exports = Comment

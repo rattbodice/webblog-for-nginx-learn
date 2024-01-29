@@ -1,6 +1,4 @@
-
-module.exports = ()=>{
-  const dotenv = require("dotenv");
+const dotenv = require("dotenv");
 const { Sequelize,DataTypes } = require("sequelize");
 const mysql = require("mysql2/promise");
 
@@ -36,4 +34,4 @@ const initMySQL = async () => {
   return conn;
 };
 
-}
+module.exports = {sequelize,initMySQL,DataTypes}

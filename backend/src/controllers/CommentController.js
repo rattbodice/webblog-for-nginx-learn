@@ -1,4 +1,4 @@
-const {Comment} = require('../models')
+const {Comment} = require('../models/Comment')
 
 module.exports = {
     async index(req, res) {

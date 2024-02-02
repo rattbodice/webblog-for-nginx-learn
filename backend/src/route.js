@@ -12,6 +12,7 @@ module.exports = (app) => {
     app.put('/user/:userId', UserController.put);
     app.delete('/user/:userId', UserController.remove);
     app.get('/user/:userId', UserController.show)
+    app.post('/api/login', UserController.login)
     // Post
     app.get('/posts', PostController.index);
     app.post('/post', PostController.create);

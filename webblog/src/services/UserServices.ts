@@ -17,5 +17,8 @@ export default {
     },
     remove(userId:number): Promise<AxiosResponse>{
         return Api().delete(`user/${userId}`)
+    },
+    login(user:any){
+        return Api().post('api/login',user)
     }
 }

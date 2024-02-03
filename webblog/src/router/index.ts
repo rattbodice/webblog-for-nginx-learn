@@ -18,8 +18,19 @@ const router = createRouter({
       path: '/home',
       name: 'home',
       component: () => import('../components/HomeView.vue')
+    },
+    {
+      path:'/mypost',
+      name: 'mypost',
+      component: () => import('../components/MyPostViewer.vue')
+    },
+    {
+      path:'/mypost/edit/:postId',
+      name: 'mypost-edit',
+      component: () => import('../components/Post/EditBlog.vue')
     }
   ]
 })
+
 
 export default router

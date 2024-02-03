@@ -1,87 +1,168 @@
 <template lang="">
-  <form>
-    <label for="chat" class="sr-only">Your message</label>
-    <div
-      class="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700"
-    >
-      <button
-        type="button"
-        class="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-      >
-        <svg
-          class="w-5 h-5"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 20 18"
-        >
-          <path
-            fill="currentColor"
-            d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"
-          />
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M18 1H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-          />
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"
-          />
-        </svg>
-        <span class="sr-only">Upload image</span>
-      </button>
-      <button
-        type="button"
-        class="p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-      >
-        <svg
-          class="w-5 h-5"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 20 20"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13.408 7.5h.01m-6.876 0h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM4.6 11a5.5 5.5 0 0 0 10.81 0H4.6Z"
-          />
-        </svg>
-        <span class="sr-only">Add emoji</span>
-      </button>
-      <textarea
-        id="chat"
-        rows="1"
-        class="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        placeholder="Your message..."
-      ></textarea>
+  <form @submit.prevent="submitForm">
+    <div class="border-b border-gray-900/10 pb-12">
+      <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+        <div class="sm:col-span-4">
+          <label
+            for="username"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Title</label
+          >
+          <div class="mt-2">
+            <div
+              class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
+            >
+              <input
+                v-model="Post.title"
+                type="text"
+                name="username"
+                id="username"
+                autocomplete="username"
+                class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                placeholder="topic"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="col-span-full">
+          <label
+            for="about"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Content</label
+          >
+          <div class="mt-2">
+            <textarea
+              v-model="Post.content"
+              id="about"
+              name="about"
+              rows="3"
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="col-span-full">
+          <label
+            for="cover-photo"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Cover photo</label
+          >
+          <div
+            class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10"
+          >
+            <div class="text-center">
+              <svg
+                class="mx-auto h-12 w-12 text-gray-300"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <img
+                v-if="imageUrl"
+                :src="imageUrl"
+                alt="Preview"
+                style="max-width: 100%; max-height: 200px; margin-top: 10px"
+              />
+              <div class="mt-4 flex text-sm leading-6 text-gray-600">
+                <label
+                  for="file-upload"
+                  class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                >
+                  <span>Upload a file</span>
+                  <input
+                    @change="handleImageChange"
+                    id="file-upload"
+                    name="file-upload"
+                    type="file"
+                    class="sr-only"
+                  />
+                </label>
+                <p class="pl-1">or drag and drop</p>
+              </div>
+              <p class="text-xs leading-5 text-gray-600">
+                PNG, JPG, GIF up to 10MB
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-6 flex items-center justify-end gap-x-6">
       <button
         type="submit"
-        class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600"
+        class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
       >
-        <svg
-          class="w-5 h-5 rotate-90 rtl:-rotate-90"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 18 20"
-        >
-          <path
-            d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z"
-          />
-        </svg>
-        <span class="sr-only">Send message</span>
+        Post
       </button>
     </div>
   </form>
 </template>
-<script setup lang="ts"></script>
+<script lang="ts">
+import { defineComponent } from "vue";
+import PostServices from "@/services/PostServices";
+const Post = {
+  title: "",
+  content: "",
+  imageUrl: "" as string,
+};
+
+export default defineComponent({
+  props: {
+    data: {
+      type: Object,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      Post,
+      selectedImage: null,
+      file: null as File | null,
+      imageUrl: null as string | null,
+    };
+  },
+  methods: {
+    handleImageChange(event: any) {
+      this.selectedImage = event.target.files[0];
+      if (this.selectedImage) {
+        this.file = this.selectedImage;
+        this.previewImage();
+      }
+    },
+    previewImage() {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        this.imageUrl = e.target?.result as string;
+      };
+
+      if (this.file) {
+        reader.readAsDataURL(this.file);
+      }
+    },
+    async submitForm() {
+      const formData = new FormData();
+      formData.append("title", this.Post.title);
+      formData.append("content", this.Post.content);
+      formData.append("image", this.selectedImage as any);
+      formData.append("userId", this.data.userId);
+      console.log(formData);
+      try {
+        await PostServices.create(formData);
+        location.reload();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+});
+</script>
 <style lang=""></style>

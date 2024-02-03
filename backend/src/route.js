@@ -1,8 +1,9 @@
 const UserController = require('./controllers/UserController')
 const PostController = require('./controllers/PostController')
-const CommentController = require('./controllers/CommentController')
+const CommentController = require('./controllers/CommentController');
+const Post = require('./models/Post');
 
-module.exports = (app) => {
+module.exports = (app,upload) => {
     app.get('/', (req, res) => {
         res.send('Hello World!');
     });
@@ -15,10 +16,12 @@ module.exports = (app) => {
     app.post('/api/login', UserController.login)
     // Post
     app.get('/posts', PostController.index);
+    app.get('/post/:postId', PostController.show)
+    app.get('/posts/by/:userId',PostController.getPostByUser);
     app.post('/post', PostController.create);
     app.put('/post/:postId', PostController.put);
     app.delete('/post/:postId', PostController.remove)
-
+    app.post('/submit-post', upload.single('image'), PostController.create);
      // Comment
      app.get('/comments', CommentController.index);
      app.post('/comment', CommentController.create);

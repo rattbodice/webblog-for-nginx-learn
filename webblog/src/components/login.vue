@@ -29,7 +29,7 @@ export default defineComponent({
         const token = response.data.user;
 
         // Save the token to local storage
-        localStorage.setItem("token", token);
+        localStorage.setItem("token",JSON.stringify(token));
         console.log(token);
         // Redirect the user to another page upon successful login
         this.$router.push("/home");

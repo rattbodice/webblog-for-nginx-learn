@@ -5,14 +5,9 @@
         class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
       >
         <a
-          href="https://flowbite.com/"
+          
           class="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            class="h-8"
-            alt="Flowbite Logo"
-          />
           <span
             class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
             >Icebook</span
@@ -51,35 +46,25 @@
                 href="#"
                 class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
                 aria-current="page"
-                >Home</a
+                >{{ data.fullName}}</a
               >
             </li>
             <li>
-              <a
-                href="#"
-                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >About</a
-              >
+              <router-link 
+              to="/mypost"
+              >My Post</router-link>
+            </li>
+            <li>
+              <router-link to="/home">
+                Home
+              </router-link>
             </li>
             <li>
               <a
+                @click="logout"
                 href="#"
                 class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >Services</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >Pricing</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >Contact</a
+                >Logout</a
               >
             </li>
           </ul>
@@ -89,6 +74,26 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  props: {
+    data: {
+      type: String,
+      required: true,
+    },
+  },
+  data() {
+    return {};
+  },
+  methods: {
+    logout() {
+      localStorage.clear();
+      this.$router.push("/");
+    },
+  },
+});
+</script>
 
 <style lang=""></style>

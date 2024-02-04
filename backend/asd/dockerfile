@@ -1,0 +1,20 @@
+# ใช้ภาพของ Node.js เวอร์ชันที่ต้องการ
+FROM node:14
+
+# ตั้งค่าไดเรกทอรีทำงาน
+WORKDIR /usr/src/index
+
+# คัดลอกไฟล์ package.json และ package-lock.json
+COPY package*.json ./
+
+# ติดตั้ง dependencies
+RUN npm install
+
+# คัดลอกไฟล์ทั้งหมดจากไดเรกทอรีปัจจุบันไปยังไดเรกทอรีทำงานใน Docker
+COPY . .
+
+# ปรับค่าพอร์ตที่แอป Node.js ของคุณใช้
+EXPOSE 3000
+
+# คำสั่งที่ใช้เริ่มแอป
+CMD ["nodemon", "app.js"]

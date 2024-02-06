@@ -1,22 +1,57 @@
 version: "3.8"
 
 services:
-  nodejs:
-    build:
+  db:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: tutorial
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    
+  nodejs:   # container name
+    build:    #location file
       context: .
-      dockerfile: Dockerfile.nodejs
+      dockerfile: Dockerfile
     deploy:
-      replicas: 2
       placement:
         constraints: [node.role == worker]
+    environment:
+      NODE_ENV: production
 
-  nginx:
-    build:
-      context: .
-      dockerfile: Dockerfile.nginx
+  nginx:              #!! Do not scale nginx
+    image: nginx:latest
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
     deploy:
-      replicas: 1
       placement:
         constraints: [node.role == worker]
     depends_on:
       - nodejs
+    ports:
+      - 3000:3000
+
+networks:
+  my_network:
+    driver: overlay
+
+volumes:
+  mysql_data:
+    driver: local
+  

@@ -2,10 +2,11 @@ const UserController = require('./controllers/UserController')
 const PostController = require('./controllers/PostController')
 const CommentController = require('./controllers/CommentController');
 const Post = require('./models/Post');
+const os =require('os');
 
 module.exports = (app,upload) => {
     app.get('/', (req, res) => {
-        res.send('Hello World!');
+        res.send(`Hello Worlda!${os.hostname()}`);
     });
     // User
     app.get('/users', UserController.index);

@@ -29,9 +29,6 @@ services:
     build:    #location file
       context: .
       dockerfile: Dockerfile
-    deploy:
-      placement:
-        constraints: [node.role == worker]
     environment:
       NODE_ENV: production
 
@@ -39,9 +36,6 @@ services:
     image: nginx:latest
     volumes:
       - ./conf.d:/etc/nginx/conf.d
-    deploy:
-      placement:
-        constraints: [node.role == worker]
     depends_on:
       - nodejs
     ports:

@@ -28,6 +28,7 @@ services:
 networks:
   my_network:
     driver: overlay
+  
 
 volumes:
   mysql_data:

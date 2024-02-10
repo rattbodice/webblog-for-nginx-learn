@@ -9,7 +9,7 @@ const sequelize = new Sequelize(
   process.env.DB_USER,
   process.env.DB_PASSWORD,
   {
-    host: "localhost",
+    host: "db",
     dialect: "mysql",
   }
 );
@@ -26,7 +26,7 @@ sequelize
 
 const initMySQL = async () => {
   conn = await mysql.createConnection({
-    host: "localhost",
+    host: "db",
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,

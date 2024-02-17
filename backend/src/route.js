@@ -6,7 +6,7 @@ const os =require('os');
 
 module.exports = (app,upload) => {
     app.get('/', (req, res) => {
-        res.send(`Hello Worlda!${os.hostname()}`);
+        res.send(`Hello World! ${os.hostname()}`);
     });
     // User
     app.get('/users', UserController.index);

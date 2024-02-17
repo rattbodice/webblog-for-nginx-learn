@@ -1,8 +1,9 @@
 version: "3.8"
 
 services:
-  nodejs:   # container name
-    image: nodejs:latest
+  
+  nodejs:   
+    image: iceswift/nodejs:latest
     environment:
       NODE_ENV: production
       DB_HOST: db
@@ -12,15 +13,32 @@ services:
       DB_NAME: webblog_db
     depends_on:
       - phpmyadmin
+    deploy:
+      placement:
+        constraints:
+          - node.role == worker
+    networks:
+      - swarm-net
+      - db-net
+    
 
-  nginx:              #!! Do not scale nginx
+  nginx:              
     image: nginx:latest
     volumes:
       - ./conf.d:/etc/nginx/conf.d
     depends_on:
       - nodejs
+      - db
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
     ports:
       - 3000:3000
+    networks:
+      - swarm-net
+      
+    
 
   db:
     image: mysql:latest
@@ -28,12 +46,13 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: webblog_db
-    ports:
-      - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - db-net
+      - swarm-net
     
-
+  
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     environment:
@@ -45,6 +64,13 @@ services:
       - "8080:80"
     depends_on:
       - db
+    networks:
+      - db-net
+
+
+networks:
+  swarm-net:
+  db-net:
 
 volumes:
   mysql_data:

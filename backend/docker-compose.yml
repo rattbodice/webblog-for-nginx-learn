@@ -12,6 +12,8 @@ services:
       DB_NAME: webblog_db
     depends_on:
       - phpmyadmin
+    volumes:
+      - .src/uploads:/app/src/uploads
 
   nginx:              #!! Do not scale nginx
     image: nginx:latest

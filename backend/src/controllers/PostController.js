@@ -1,5 +1,6 @@
 const  Post  = require("../models/Post");
 const User = require("../models/User")
+const path = require('path');
 module.exports = {
   async index(req, res) {
     try {
@@ -16,7 +17,7 @@ module.exports = {
  
   async create(req, res) {
     try {
-      console.log('test')
+      console.log('req.file.filename')
       const { title, content , userId } = req.body;
       const imageUrl = req.file.filename;
       const objPost = {

@@ -1,5 +1,5 @@
 <template lang="">
-  <div>
+  <div class="relative z-0">
     <article
       class="flex max-w-xl flex-col items-start justify-between bg-emerald-100 p-4 rounded-md text-white"
     >

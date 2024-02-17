@@ -26,15 +26,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-// Set up Multer storage configuration
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/"); // Set the destination folder for uploaded files
+    cb(null, 'uploads/'); // Specify the destination directory
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname); // Set the filename to the original filename
-  },
+    // Generate a unique filename (you can customize this logic)
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+  }
 });
+
 const upload = multer({ storage: storage });
 
 

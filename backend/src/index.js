@@ -17,10 +17,8 @@ const Comment = require("./models/Comment");
 User.hasMany(Post, { as: "authorId" });
 Post.belongsTo(User);
 
-Post.hasMany(Comment, { foreignKey: "cm_postId" });
-Comment.belongsTo(Post, { foreignKey: "cm_postId" });
-User.hasMany(Comment, { foreignKey: "cm_userId" });
-Comment.belongsTo(User, { foreignKey: "cm_userId" });
+User.belongsToMany(Post, { through: Comment });
+Post.belongsToMany(User, { through: Comment });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,7 +26,8 @@ app.use(cors());
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Specify the destination directory
+    const destinationPath = path.join(__dirname,'uploads');
+    cb(null, destinationPath); // Specify the destination directory
   },
   filename: function (req, file, cb) {
     // Generate a unique filename (you can customize this logic)

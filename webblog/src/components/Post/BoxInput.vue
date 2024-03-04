@@ -154,10 +154,11 @@ export default defineComponent({
       formData.append("content", this.Post.content);
       formData.append("image", this.selectedImage as any);
       formData.append("userId", this.data.userId);
+      
       console.log(formData);
       try {
         await PostServices.create(formData);
-        location.reload();
+        this.$router.push('/mypost');
       } catch (error) {
         console.log(error);
       }

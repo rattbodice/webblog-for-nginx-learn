@@ -5,8 +5,9 @@ export default {
     index(){
         return Api().get('posts')
     },
-    update(post:any){
-        return Api().put(`post/${post.postId}`,post)
+    update(post:any,postId:number){
+        console.log(post)
+        return Api().put(`post/${postId}`,post)
     },
     create(post:any){
         return Api().post('submit-post',post)

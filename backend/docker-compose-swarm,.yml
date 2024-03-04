@@ -1,0 +1,69 @@
+version: "3.8"
+
+services:
+
+  nodejs:   
+    image: nodejs:latest
+    environment:
+      NODE_ENV: production
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: webblog_db
+    depends_on:
+      - phpmyadmin
+    volumes:
+      - ./src/uploads:/usr/src/app/src/uploads
+    networks:
+      - swarm-net
+
+  nginx:              
+    image: nginx:latest
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
+    depends_on:
+      - nodejs
+      - db
+    ports:
+      - 3000:3000
+    networks:
+      - swarm-net
+      
+    
+
+  db:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: webblog_db
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - db-net
+      - swarm-net
+    
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - db-net
+
+
+networks:
+  swarm-net:
+  db-net:
+
+volumes:
+  mysql_data:
+    driver: local  

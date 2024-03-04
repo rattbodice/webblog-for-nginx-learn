@@ -6,7 +6,7 @@ const os =require('os');
 
 module.exports = (app,upload) => {
     app.get('/', (req, res) => {
-        res.send(`Hello Worlda!${os.hostname()}`);
+        res.send(`Helloฟหก Worlaad! ${os.hostname()}`);
     });
     // User
     app.get('/users', UserController.index);
@@ -20,7 +20,7 @@ module.exports = (app,upload) => {
     app.get('/post/:postId', PostController.show)
     app.get('/posts/by/:userId',PostController.getPostByUser);
     app.post('/post', PostController.create);
-    app.put('/post/:postId', PostController.put);
+    app.put('/post/:postId', upload.single('image'), PostController.put);
     app.delete('/post/:postId', PostController.remove)
     app.post('/submit-post', upload.single('image'), PostController.create);
      // Comment

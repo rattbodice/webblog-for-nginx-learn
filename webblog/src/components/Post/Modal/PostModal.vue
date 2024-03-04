@@ -1,9 +1,9 @@
 <template lang="">
   <div
-    v-show="modalActive"
+    v-show="storeModal.status"
     class=" fixed top-0 z-20 left-0 w-full flex items-center justify-center bg-black bg-opacity-50 md:inset-0 h-[calc(100%-1rem)] max-h-full"
   >
-    <div v-if="modalActive" class="absolute p-4 w-full max-w-2xl max-h-full">
+    <div v-if="storeModal.status" class="absolute p-4 w-full max-w-2xl max-h-full">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
         <!-- Modal header -->
@@ -14,7 +14,7 @@
             Post
           </h3>
           <button
-            @click="closeModal"
+            @click="storeModal.closeModal"
             type="button"
             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
             data-modal-hide="default-modal"
@@ -52,15 +52,14 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import { modal } from "@/stores/modal";
 export default defineComponent({
   props: {
-    modalActive:{
-        type: Boolean,
-        
-    }
+    
   },
   data() {
-    return {};
+    const storeModal = modal();
+    return {storeModal};
   },
   emits: ['closeModal']
   ,

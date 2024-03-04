@@ -35,7 +35,7 @@
       </div>
       <div v-if="edit" class="flex">
         <button
-          @click="gotoEdit(data.postId)"
+          @click="sendIdToParent(data.postId)"
           type="button"
           class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
         >
@@ -55,8 +55,10 @@
 <script lang="ts">
 import PostServices from "@/services/PostServices";
 import { defineComponent, ref } from "vue";
+import { modal } from "@/stores/modal";
 
 const statusInput = ref(false);
+const statusModal = modal();
 
 const dataForInput = ref({});
 
@@ -86,13 +88,11 @@ export default defineComponent({
     getImageUrl(imageName: string) {
       return `http://localhost:3000/uploads/${imageName}`;
     },
-    sendIdToParent() {
-      console.log("click");
-      console.log(this.keyIndex);
-      this.$emit("idToParent", this.$refs.childIndex);
-    },
-    gotoEdit(postId:number){
-      this.$router.push(`/mypost/edit/${postId}`)
+    sendIdToParent(postId:number) {
+      console.log()
+      statusModal.setId(postId)
+      statusModal.setStatus(true)
+      
     },
     async submitDelete(){
       const userConfirmed = window.confirm('Are you sure you want to delete?');
@@ -106,7 +106,7 @@ export default defineComponent({
     }
   },
   mounted() {
-      
+    
   },
 });
 </script>

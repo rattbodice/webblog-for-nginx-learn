@@ -5,12 +5,13 @@ const mysql = require("mysql2/promise");
 
 dotenv.config();
 const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
+  'webblog_db',
+  'root',
+  'root',
   {
-    host: "db",
+    host: 'localhost',
     dialect: "mysql",
+  
   }
 );
 
@@ -26,10 +27,10 @@ sequelize
 
 const initMySQL = async () => {
   conn = await mysql.createConnection({
-    host: "db",
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    host: 'localhost',
+    user: 'root' ,
+    password: 'root',
+    database: 'webblog_db'
   });
   return conn;
 };
